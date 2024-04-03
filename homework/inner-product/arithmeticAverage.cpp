@@ -3,23 +3,25 @@
 #include <numeric>
 #include <stdexcept>
 
-double ArithmeticAverage(std::vector<double> v1, std::vector<double> v2) {
+double ArithmeticAverage(const std::vector<int> &first,
+                         const std::vector<int> &second) {
   double sum{0};
-  for (auto x : v1)
+  for (auto x : first)
     sum += x;
-  for (auto x : v2)
+  for (auto x : second)
     sum += x;
 
-  return sum / (v1.size() + v2.size());
+  return sum / (first.size() + second.size());
 }
 
-double Distance(std::vector<double> point1, std::vector<double> point2) {
-  if (point1.size() != point2.size()) {
+double Distance(const std::vector<int> &first,
+                const std::vector<int> &second) {
+  if (first.size() != second.size()) {
     throw std::range_error(
         "The distance can be calculated for vectors of the same size only");
   }
 
   return std::sqrt(std::transform_reduce(
-      point1.begin(), point1.end(), point2.begin(), 0., std::plus<>(),
+      first.begin(), first.end(), second.begin(), 0., std::plus<>(),
       [](auto a, auto b) { return pow(b - a, 2); }));
 }
